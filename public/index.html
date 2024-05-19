@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>API Documentation</title>
+</head>
+
+<body>
+<h1 class="text-center display-3 py-5">API Documentation</h1>
+<div class="container mt-4">
+    <h2 class="display-6">Users Routes</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>HTTP Method</th>
+            <th>Route</th>
+            <th>Description</th>
+            <th>Parameters / Request Body</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>POST</td>
+            <td>/users</td>
+            <td>Registers a new user. Encrypts the password before saving to the database.</td>
+            <td>
+                <ul>
+                    <li>Request Body (JSON):
+                        <pre>{
+       "name": "Your Name",
+       "email": "user@example.com",
+       "password": "your_password",
+       "phone": "123-456-7890",
+   }
+                        </pre>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>/users/login</td>
+            <td>Authenticates a user and returns a token as a cookie.</td>
+            <td>
+                <ul>
+                    <li>Request Body (JSON):
+                        <pre>{
+       "email": "user@example.com",
+       "password": "your_password"
+   }</pre>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>/users/logout</td>
+            <td>Logs out the authenticated user and clears the token cookie.</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>PATCH</td>
+            <td>/users/:id</td>
+            <td>Updates the authenticated user's information.</td>
+            <td>
+                <ul>
+                    <li>Cookie: token (Authentication)</li>
+                    <li>Path Parameter: id</li>
+                    <li>Request Body: JSON with user fields to update, optional password change.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>DELETE</td>
+            <td>/users/:id</td>
+            <td>Deletes the authenticated user's account, non-admin users only.</td>
+            <td>
+                <ul>
+                    <li>Cookie: token (Authentication)</li>
+                    <li>Path Parameter: id</li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container mt-5">
+    <h2 class="display-6">Opportunities Routes</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>HTTP Method</th>
+            <th>Route</th>
+            <th>Description</th>
+            <th>Parameters / Request Body</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>GET</td>
+            <td>/opp</td>
+            <td>Retrieves all active opportunities. Supports sorting.</td>
+            <td>
+                <ul>
+                    <li>Query Parameters (optional):
+                        <ul>
+                            <li><b>sort</b>: Field to sort by (e.g., sort=createdAt).</li>
+                            <li><b>order</b>: Sort order (1 for ascending, -1 for descending).</li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/opp/single/:id</td>
+            <td>Retrieves a specific opportunity by ID.</td>
+            <td>
+                <ul>
+                    <li>Path Parameter: id</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/opp/oppPending</td>
+            <td>Retrieves pending opportunities (for admins only).</td>
+            <td>
+                <ul>
+                    <li>Cookie: token (Authentication)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>/opp</td>
+            <td>Creates a new opportunity.</td>
+            <td>
+                <ul>
+                    <li>Cookie: token (Authentication)</li>
+                    <li>Request Body: Opportunity data in JSON format.</li>
+
+                        <ul>
+                            <li>Request Body (JSON):
+                                <pre>{
+    name: String,
+    phone: String,
+    address: String,
+    description:  String,
+     totalVolunteersNeeded: Number
+     }</pre>
+                            </li>
+                        </ul>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>PATCH</td>
+            <td>/opp/:id</td>
+            <td>Updates an existing opportunity by ID.</td>
+            <td>
+                <ul>
+                    <li>Cookie: token (Authentication)</li>
+                    <li>Path Parameter: id</li>
+                    <li>Request Body: Updated opportunity data in JSON format.</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>DELETE</td>
+            <td>/opp/:id</td>
+            <td>Deletes an opportunity by ID.</td>
+            <td>
+                <ul>
+                    <li>Cookie: token (Authentication)</li>
+                    <li>Path Parameter: id</li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>
